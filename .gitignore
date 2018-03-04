@@ -12,3 +12,8 @@ auto
 _region_.*
 #*
 .#*
+\.ipynb_checkpoints/
+
+PyMC3_nb/__pycache__/
+
+\.Rhistory
