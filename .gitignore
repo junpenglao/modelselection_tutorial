@@ -31,6 +31,16 @@ auto
 *.pdfsync
 *.run.xml
 *.snm
+auto
+_region_.*
+#*
+.#*
+\.ipynb_checkpoints/
+
+PyMC3_nb/__pycache__/
+
+\.Rhistory
+
 *.synctex.gz
 *.toc
 *.vrb
