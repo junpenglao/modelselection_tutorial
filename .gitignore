@@ -60,4 +60,14 @@ _autidx_.bib
 *_cache
 *_files
 .Rhistory
+auto
+_region_.*
+#*
+.#*
+\.ipynb_checkpoints/
+
+PyMC3_nb/__pycache__/
+
+\.Rhistory
+
 .Rproj.user
