@@ -17,7 +17,7 @@ csl: harvard-cite-them-right.csl
 # Setup  {.unnumbered}
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(cache=TRUE, message=FALSE, error=FALSE, warning=FALSE, comment=NA, out.width='95%')
+knitr::opts_chunk$set(cache=FALSE, message=FALSE, error=FALSE, warning=FALSE, comment=NA, out.width='95%')
 ```
 
 **Load packages**
@@ -28,6 +28,7 @@ library(loo)
 library(tidyverse)
 library(GGally)
 library(bayesplot)
+theme_set(bayesplot::theme_default())
 library(projpred)
 SEED=87
 ```
@@ -43,7 +44,7 @@ We generate the data used previously to illustrate multi-collinearity problems.
 # all this data generation is from Cade 2015
 # doesn't matter what this is -- if you use a different number your results will be different from mine.
 set.seed(SEED)
-df <- data_frame(
+df <- tibble(
   pos.tot = runif(200,min=0.8,max=1.0),
   urban.tot = pmin(runif(200,min=0.0,max=0.02),1.0 - pos.tot),
   neg.tot = (1.0 - pmin(pos.tot + urban.tot,1)),
@@ -108,7 +109,7 @@ fitg0 <- stan_glm(y ~ 1, data = df, na.action = na.fail, family=poisson(), seed=
 ```{r}
 (loog <- loo(fitg))
 (loog0 <- loo(fitg0))
-compare_models(loog0, loog)
+loo_compare(loog0, loog)
 ```
 Based on cross-validation covariates together contain significant information to improve predictions.
 
@@ -131,7 +132,7 @@ fitg_cv$vind
 
 We can now look at the estimated predictive performance of smaller models compared to the full model.
 ```{r}
-varsel_plot(fitg_cv, stats = c('elpd', 'rmse'), deltas=T)
+varsel_plot(fitg_cv, stats = c('elpd', 'rmse'))
 ```
 
 And we get a LOO based recommendation for the model size to choose
